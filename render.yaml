@@ -1,0 +1,35 @@
+# SmartAttend demo deployment for Render.
+# Free services use an ephemeral filesystem: app data resets after restarts/redeploys.
+services:
+  - type: web
+    name: smartattend
+    runtime: docker
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: HOST
+        value: 0.0.0.0
+      - key: AUTO_SEED_DEMO
+        value: "1"
+      - key: SECRET_KEY
+        generateValue: true
+      - key: SESSION_COOKIE_SECURE
+        value: "1"
+      - key: LOG_TO_FILE
+        value: "0"
+      - key: DATABASE_PATH
+        value: /tmp/smartattend/attendance.db
+      - key: FACES_DIR
+        value: /tmp/smartattend/faces
+      - key: FACE_GALLERY_PATH
+        value: /tmp/smartattend/models/face_gallery.npz
+      - key: ML_DATASET_PATH
+        value: /tmp/smartattend/academic_dataset.csv
+      - key: MODEL_REGISTRY_DIR
+        value: /tmp/smartattend/models/registry
+      - key: CURRENT_VERSION_POINTER
+        value: /tmp/smartattend/models/registry/current_version.txt
+      - key: BASELINE_STATS_PATH
+        value: /tmp/smartattend/models/registry/training_baseline_stats.json
